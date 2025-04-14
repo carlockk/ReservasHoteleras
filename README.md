@@ -43,7 +43,7 @@ Se utilizó postman para las variables de entorno, es muy simple de utilizar
 
 ---
 
-tambien hice una versión para render por si desean revisar ahí
+## También hice una versión para render por si desean revisar ahí
 ```
 Disponible en:
 https://reservashoteleras.onrender.com/api-docs/
