@@ -39,6 +39,8 @@ para ver todas las reservas:
 http://localhost:3000/api/reservas
 
 Se utilizó postman para las variables de entorno, es muy simple de utilizar
+
+archivo postmanReservasHoteleras.json para postman en version pc local
 ```
 
 ---
