@@ -31,12 +31,14 @@ npm install
 npm start
 ```
 
-4. voy al navegador en:
+voy al navegador en:
 ```
 http://localhost:3000/api-docs
 
 para ver todas las reservas: 
 http://localhost:3000/api/reservas
+
+Se utilizó postman para las variables de entorno, es muy simple de utilizar
 ```
 
 ---
@@ -54,12 +56,10 @@ Como estoy usando una cuenta gratuita, el servicio se va a pausar automáticamen
 
 La siguiente vez que alguien acceda, puede tardar 30 a 50 segundos en "despertar".
 
+Se debe crar una reserva, no hay por defecto no como en el local que si tengo una de ejemplo
+
 
 ```
-
-Se utilizó postman para las variables de entorno
-
----
 
 ## Algunos filtros por query disponibles
 
