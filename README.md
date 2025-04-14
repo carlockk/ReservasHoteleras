@@ -56,6 +56,7 @@ Como estoy usando una cuenta gratuita, el servicio se va a pausar automáticamen
 
 La siguiente vez que alguien acceda, se demora unos segundos en activarse.
 
+En el archivo src/controllers/reservas.controller.js probé una nueva forma aprendida de hacer if, al principio me costo pero despues la comprendi perfecto.. es la amigable react por llamarle de alguna forma.
 
 ```
 
@@ -67,7 +68,7 @@ La siguiente vez que alguien acceda, se demora unos segundos en activarse.
 - `?estado=confirmada`
 - `?num_huespedes=3`
 
-Es recomendable usar texto real, con tildes y mayúsculas.  
+Es recomendable usar texto real, con tildes y mayúsculas, de todas formas puse .toLowerCase() en la versión para render 
 Evitar usar todo en minúscula o sin acentos porque sino no hay resultados de búsqueda.
 
 ---
