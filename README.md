@@ -43,8 +43,17 @@ http://localhost:3000/api/reservas
 
 ---
 
-Hice una versión para render y una para local
----
+tambien una versión para render
+```
+Disponible en:
+https://reservashoteleras.onrender.com/api-docs/
+
+para ver todas las reservas en:
+
+https://reservashoteleras.onrender.com/api/reservas
+
+
+```
 
 Se utilizó postman para las variables de entorno
 
