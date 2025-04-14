@@ -1,119 +1,72 @@
 const fs = require('fs');
 const path = require('path');
-
 const dataPath = path.join(__dirname, '../data/reservas.json');
 
-// de aqui saco los datos desde el archivo JSON
-const loadReservas = () => JSON.parse(fs.readFileSync(dataPath));
-const saveReservas = (data) => fs.writeFileSync(dataPath, JSON.stringify(data, null, 2));
+// Utilidades
+const load = () => JSON.parse(fs.readFileSync(dataPath));
+const save = data => fs.writeFileSync(dataPath, JSON.stringify(data, null, 2));
 
-// Crear nueva reserva con ID que se incrementa
+// Crear
 const createReserva = (req, res) => {
-    const { hotel, tipo_habitacion, num_huespedes, fecha_inicio, fecha_fin, estado } = req.body;
+  const campos = ['hotel', 'tipo_habitacion', 'num_huespedes', 'fecha_inicio', 'fecha_fin', 'estado'];
+  const falta = campos.some(c => !req.body[c]);
+  if (falta) return res.status(400).json({ mensaje: 'Todos los campos son requeridos.' });
 
-    if (!hotel || !tipo_habitacion || !num_huespedes || !fecha_inicio || !fecha_fin || !estado) {
-        return res.status(400).json({ mensaje: 'Todos los campos son requeridos.' });
-    }
-
-    const reservas = loadReservas();
-    const nuevoId = reservas.length > 0 ? reservas[reservas.length - 1].id + 1 : 1;
-
-    const nuevaReserva = {
-        id: nuevoId,
-        hotel,
-        tipo_habitacion,
-        num_huespedes,
-        fecha_inicio,
-        fecha_fin,
-        estado
-    };
-
-    reservas.push(nuevaReserva);
-    saveReservas(reservas);
-    res.status(201).json(nuevaReserva);
+  const reservas = load();
+  const nueva = {
+    id: reservas.length ? reservas[reservas.length - 1].id + 1 : 1,
+    ...req.body
+  };
+  reservas.push(nueva);
+  save(reservas);
+  res.status(201).json(nueva);
 };
 
-// traigo todas las reservas con filtros
+// Listar con filtros
 const getAllReservas = (req, res) => {
-    let reservas = loadReservas();
-    const { hotel, fecha_inicio, fecha_fin, tipo_habitacion, estado, num_huespedes } = req.query;
-
-    if (hotel) {
-        reservas = reservas.filter(r => r.hotel.toLowerCase().includes(hotel.toLowerCase()));
-    }
-    if (fecha_inicio && fecha_fin) {
-        reservas = reservas.filter(r =>
-            r.fecha_inicio >= fecha_inicio && r.fecha_fin <= fecha_fin
-        );
-    }
-    if (tipo_habitacion) {
-        reservas = reservas.filter(r => r.tipo_habitacion === tipo_habitacion);
-    }
-    if (estado) {
-        reservas = reservas.filter(r => r.estado === estado);
-    }
-    if (num_huespedes) {
-        reservas = reservas.filter(r => parseInt(r.num_huespedes) === parseInt(num_huespedes));
-    }
-
-    res.json(reservas);
+  const q = req.query;
+  const reservas = load().filter(r =>
+    (!q.hotel || r.hotel.toLowerCase().includes(q.hotel.toLowerCase())) &&
+    (!(q.fecha_inicio && q.fecha_fin) || (r.fecha_inicio >= q.fecha_inicio && r.fecha_fin <= q.fecha_fin)) &&
+    (!q.tipo_habitacion || r.tipo_habitacion.toLowerCase() === q.tipo_habitacion.toLowerCase()) &&
+    (!q.estado || r.estado.toLowerCase() === q.estado.toLowerCase()) &&
+    (!q.num_huespedes || +r.num_huespedes === +q.num_huespedes)
+  );
+  res.json(reservas);
 };
 
-// ver reserva específica
+// Buscar por ID
 const getReservaById = (req, res) => {
-    const reservas = loadReservas();
-    const reserva = reservas.find(r => r.id == req.params.id);
-
-    if (!reserva) {
-        return res.status(404).json({ mensaje: 'Reserva no encontrada.' });
-    }
-
-    res.json(reserva);
+  const r = load().find(r => r.id == req.params.id);
+  r ? res.json(r) : res.status(404).json({ mensaje: 'Reserva no encontrada.' });
 };
 
-// Editar y actualizar reserva
+// Actualizar
 const updateReserva = (req, res) => {
-    const reservas = loadReservas();
-    const index = reservas.findIndex(r => r.id == req.params.id);
+  const reservas = load();
+  const i = reservas.findIndex(r => r.id == req.params.id);
+  if (i === -1) return res.status(404).json({ mensaje: 'Reserva no encontrada.' });
 
-    if (index === -1) {
-        return res.status(404).json({ mensaje: 'Reserva no encontrada.' });
-    }
-
-    const { hotel, tipo_habitacion, num_huespedes, fecha_inicio, fecha_fin, estado } = req.body;
-
-    reservas[index] = {
-        ...reservas[index],
-        hotel: hotel || reservas[index].hotel,
-        tipo_habitacion: tipo_habitacion || reservas[index].tipo_habitacion,
-        num_huespedes: num_huespedes || reservas[index].num_huespedes,
-        fecha_inicio: fecha_inicio || reservas[index].fecha_inicio,
-        fecha_fin: fecha_fin || reservas[index].fecha_fin,
-        estado: estado || reservas[index].estado,
-    };
-
-    saveReservas(reservas);
-    res.json(reservas[index]);
+  reservas[i] = { ...reservas[i], ...req.body };
+  save(reservas);
+  res.json(reservas[i]);
 };
 
-// Eliminar reserva
+// Eliminar
 const deleteReserva = (req, res) => {
-    let reservas = loadReservas();
-    const index = reservas.findIndex(r => r.id == req.params.id);
+  const reservas = load();
+  const i = reservas.findIndex(r => r.id == req.params.id);
+  if (i === -1) return res.status(404).json({ mensaje: 'Reserva no encontrada.' });
 
-    if (index === -1) {
-        return res.status(404).json({ mensaje: 'Reserva no encontrada.' });
-    }
-
-    const eliminada = reservas.splice(index, 1)[0];
-    saveReservas(reservas);
-    res.json({ mensaje: 'Reserva eliminada.', eliminada });
+  const [eliminada] = reservas.splice(i, 1);
+  save(reservas);
+  res.json({ mensaje: 'Reserva eliminada.', eliminada });
 };
 
 module.exports = {
-    createReserva,
-    getAllReservas,
-    getReservaById,
-    updateReserva,
-    deleteReserva
+  createReserva,
+  getAllReservas,
+  getReservaById,
+  updateReserva,
+  deleteReserva
 };
