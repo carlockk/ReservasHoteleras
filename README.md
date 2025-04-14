@@ -26,9 +26,7 @@ reservas-hotel/
 
 ## Hice una versión para escritorio servidor local
 
-para crear el proyecto hice:
-
-```abri terminal
+```abri terminal e instalé las dependencias
 npm install
 npm start
 ```
@@ -43,7 +41,7 @@ http://localhost:3000/api/reservas
 
 ---
 
-tambien una versión para render
+tambien hice una versión para render por si desean revisar ahí
 ```
 Disponible en:
 https://reservashoteleras.onrender.com/api-docs/
@@ -51,6 +49,10 @@ https://reservashoteleras.onrender.com/api-docs/
 para ver todas las reservas en:
 
 https://reservashoteleras.onrender.com/api/reservas
+
+Como estoy usando una cuenta gratuita, el servicio se va a pausar automáticamente si no recibe tráfico por unos minutos.
+
+La siguiente vez que alguien acceda, puede tardar 30 a 50 segundos en "despertar".
 
 
 ```
