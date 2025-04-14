@@ -3,11 +3,11 @@ const path = require('path');
 
 const dataPath = path.join(__dirname, '../data/reservas.json');
 
-// Leer datos desde archivo JSON
+// de aqui saco los datos desde el archivo JSON
 const loadReservas = () => JSON.parse(fs.readFileSync(dataPath));
 const saveReservas = (data) => fs.writeFileSync(dataPath, JSON.stringify(data, null, 2));
 
-// Crear nueva reserva con ID incremental
+// Crear nueva reserva con ID que se incrementa
 const createReserva = (req, res) => {
     const { hotel, tipo_habitacion, num_huespedes, fecha_inicio, fecha_fin, estado } = req.body;
 
@@ -33,7 +33,7 @@ const createReserva = (req, res) => {
     res.status(201).json(nuevaReserva);
 };
 
-// Obtener todas las reservas con filtros
+// traigo todas las reservas con filtros
 const getAllReservas = (req, res) => {
     let reservas = loadReservas();
     const { hotel, fecha_inicio, fecha_fin, tipo_habitacion, estado, num_huespedes } = req.query;
@@ -59,7 +59,7 @@ const getAllReservas = (req, res) => {
     res.json(reservas);
 };
 
-// Obtener reserva específica
+// ver reserva específica
 const getReservaById = (req, res) => {
     const reservas = loadReservas();
     const reserva = reservas.find(r => r.id == req.params.id);
@@ -71,7 +71,7 @@ const getReservaById = (req, res) => {
     res.json(reserva);
 };
 
-// Actualizar reserva
+// Editar y actualizar reserva
 const updateReserva = (req, res) => {
     const reservas = loadReservas();
     const index = reservas.findIndex(r => r.id == req.params.id);
