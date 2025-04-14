@@ -54,9 +54,7 @@ https://reservashoteleras.onrender.com/api/reservas
 
 Como estoy usando una cuenta gratuita, el servicio se va a pausar automáticamente si no recibe tráfico por unos minutos.
 
-La siguiente vez que alguien acceda, puede tardar 30 a 50 segundos en "despertar".
-
-Se debe crar una reserva, no hay por defecto no como en el local que si tengo una de ejemplo
+La siguiente vez que alguien acceda, se demora unos segundos en activarse.
 
 
 ```
