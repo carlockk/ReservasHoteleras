@@ -1,0 +1,134 @@
+{
+  "info": {
+    "_postman_id": "c145456a-55f1-4db6-b3b0-1b529f9c0001",
+    "name": "API Reservas Hoteleras (Final)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Crear reserva",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"hotel\": \"Hotel Para\u00edso\",\n  \"tipo_habitacion\": \"Suite\",\n  \"num_huespedes\": 2,\n  \"fecha_inicio\": \"2023-12-24\",\n  \"fecha_fin\": \"2023-12-28\",\n  \"estado\": \"confirmada\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/reservas",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "reservas"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Ver todas las reservas",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{base_url}}/reservas",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "reservas"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Ver reserva por ID",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{base_url}}/reservas/1",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "reservas",
+            "1"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Actualizar reserva",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"tipo_habitacion\": \"Familiar\",\n  \"estado\": \"pendiente\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/reservas/1",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "reservas",
+            "1"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Eliminar reserva",
+      "request": {
+        "method": "DELETE",
+        "url": {
+          "raw": "{{base_url}}/reservas/1",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "reservas",
+            "1"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Filtrar por hotel",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{base_url}}/reservas?hotel=Hotel Para\u00edso",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "reservas"
+          ],
+          "query": [
+            {
+              "key": "hotel",
+              "value": "Hotel Para\u00edso"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:3000/api"
+    }
+  ]
+}
