@@ -88,3 +88,7 @@ Evitar usar todo en minúscula o sin acentos porque sino no hay resultados de b�
 - Swagger (OpenAPI 3)
 - Postman
 - JSON (como base de datos)
+
+---
+
+Fue de gran ayuda el mega lab de la última clase, sin esa no hubiera entendido nada....
